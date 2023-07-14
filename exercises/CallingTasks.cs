@@ -176,20 +176,163 @@ namespace exercises
             Console.Write($"\r\n[{string.Join(", ", array)}] => ");
             Console.WriteLine($"{array.Max()} - {array.Min()} = {array.Max() - array.Min()}");
         }
-        public void Task41() => Console.WriteLine("Вызван метод 41 ");
-        public void Task43() => Console.WriteLine("Вызван метод 43 ");
-        public void Task47() => Console.WriteLine("Вызван метод 47 ");
-        public void Task50() => Console.WriteLine("Вызван метод 50 ");
-        public void Task52() => Console.WriteLine("Вызван метод 52 ");
-        public void Task54() => Console.WriteLine("Вызван метод 54 ");
-        public void Task56() => Console.WriteLine("Вызван метод 56");
-        public void Task58() => Console.WriteLine("Вызван метод 58 ");
-        public void Task60() => Console.WriteLine("Вызван метод 60 ");
-        public void Task62() => Console.WriteLine("Вызван метод 62 ");
-        public void Task66() => Console.WriteLine("Вызван метод 66 ");
-        public void Task68() => Console.WriteLine("Вызван метод 68 ");
+        public void Task41()
+        {
+            Console.WriteLine();
+            int[] array = Universal.ReadLineToArray("Введите числа через пробел: ");
+            Console.Write($"\r\n{string.Join(", ", array)} => ");
+            Console.Write(array.Count(x => x > 0));
+        }
+        public void Task43()
+        {
+            double k1 = Universal.ReadInt("Введите значение аргумента для первой прямой: ");
+            double b1 = Universal.ReadInt("Введите свободный член для первой прямой: ");
+            double k2 = Universal.ReadInt("Введите значение аргумента для второй прямой: ");
+            double b2 = Universal.ReadInt("Введите свободный член для второй прямой: ");
+            if (k1 == k2 && b1 == b2) Console.WriteLine("Прямые совпадают");
+            else if (k1 == k2 && b1 != b2) Console.WriteLine("Прамые параллельны и решений нет");
+            else
+            {
+                double[] array = Universal.IntersectionLines(k1, k2, b1, b2);
 
+                Console.Write($"\r\nb1 = {b1}, k1 = {k1}, b2 = {b2}, k2 = {k2} -> ");
+                Console.Write($"({string.Join(",  ", array)})");
+            }
+        }
+        public void Task47()
+        {
+            int m = Universal.ReadInt("Введите количество столбцов в массиве: ");
+            int n = Universal.ReadInt("Введите количество строк в массиве: ");
+            double[,] array = Universal.FillRandomDoubleMatrix(m, n);
+            Console.WriteLine($"m = {m}, n = {n}.");
+            Universal.PrintDoubleMatrix(array);
+        }
+        public void Task50()
+        {
+            int row = Universal.ReadInt("Введите количество строк в массиве: ");
+            int col = Universal.ReadInt("Введите количество столбцов в массиве: ");
+            int[] findElement = Universal.ReadLineToArray("Введи позицию искомого элемента через пробел (пример: 4 5): ");
+            int[,] array = Universal.FillRandomIntMatrix(row, col, 0, 20);
+            Universal.PrintIntMatrix(array);
+            if (findElement[0] < row && findElement[1] < col)
+            {
+                Console.WriteLine($"{findElement[0]},{findElement[1]} -> {array[findElement[0], findElement[1]]}");
+            }
+            else Console.WriteLine($"{findElement[0]},{findElement[1]} -> такого числа в массиве нет");
 
+        }
+        public void Task52()
+        {
+            int row = Universal.ReadInt("Введите количество строк в массиве: ");
+            int col = Universal.ReadInt("Введите количество столбцов в массиве: ");
+            int[,] array = Universal.FillRandomIntMatrix(row, col, 0, 100);
+            double[] arithmeticMean = new double[col];
+            Universal.PrintIntMatrix(array);
+            int result = 0;
+            for (int j = 0; j < array.GetLength(1); j++)
+            {
+                for (int i = 0; i < array.GetLength(0); i++)
+                {
+                    result += array[i, j];
+                }
+                arithmeticMean[j] =Math.Round((double)result / (double)array.GetLength(0),2);
+                result = 0;
+            }
+            Console.WriteLine("\r\nСреднее арифметическое каждого столбца: " + string.Join(";  ", arithmeticMean) + ".");
+        }
+        public void Task54()
+        {
+            int row = Universal.ReadInt("Введи количество строк в массиве: ");
+            int col = Universal.ReadInt("Введи количество столбцов в массиве: ");
+            int[,] array = Universal.FillRandomIntMatrix(row, col, 0, 10);
+            Universal.PrintIntMatrix(array);
+            Console.WriteLine();
+            Universal.BubbleSortForIntMatrix(array);
+            Universal.PrintIntMatrix(array);
+        }
+        public void Task56()
+        {
+            int row = Universal.ReadInt("Введи количество строк в массиве: ");
+            int col = Universal.ReadInt("Введи количество столбцов в массиве: ");
+            int[,] array = Universal.FillRandomIntMatrix(row, col, 0, 10);
+            Console.WriteLine();
+            Universal.PrintIntMatrix(array);
+            Console.WriteLine();
+            Console.WriteLine($"Наименьшая сумма элементов находится на строке #{Universal.MinSumElementRow(array)}");
+
+        }
+        public void Task58()
+        {
+            int rows1 = Universal.ReadInt("Введите количество строк первой матрицы: ");
+            int cols1 = Universal.ReadInt("Введите количество столбцов первой матрицы: ");
+
+            int rows2 = Universal.ReadInt("Введите количество строк второй матрицы: ");
+            int cols2 = Universal.ReadInt("Введите количество столбцов второй матрицы: ");
+            if (cols1 != rows2) { Console.WriteLine("Перемножение матриц не возможно"); }
+            else
+            {
+                int[,] array1 = Universal.FillRandomIntMatrix(rows1, cols1, 0, 10);
+                int[,] array2 = Universal.FillRandomIntMatrix(rows2, cols2, 0, 10);
+                int[,] resultArray = Universal.CompositionMatrix(array1, array2);
+                Console.WriteLine();
+                Universal.PrintIntMatrix(array1);
+                Console.WriteLine();
+                Universal.PrintIntMatrix(array2);
+                Console.WriteLine();
+                Universal.PrintIntMatrix(resultArray);
+            }
+        }
+        public void Task60()
+        {
+            int x = Universal.ReadInt("Введите x: ");
+            int y = Universal.ReadInt("Введите y: ");
+            int z = Universal.ReadInt("Введите z: ");
+            if (x * y * z <= 90)
+            {
+                int[] buffer = Universal.BufferArray();
+                int[,,] matrix = Universal.FillMatrixForTask60(x, y, z, ref buffer);
+                Universal.PrintMatrixForTask60(matrix);
+            }
+            else Console.WriteLine("Мы не можем сгенерировать такой массив соблюдая условия задачи.");
+        }
+        public void Task62()
+        {
+            int number1 = Universal.ReadInt("Введите количество строк: ");
+            int number2 = Universal.ReadInt("Введите количество столбцов: ");
+            int[,] array = new int[number1, number2];
+            Console.WriteLine();
+            Universal.FillSpiralArray(ref array, number1, number2);
+            Universal.PrintMatrixForTask62(array);
+        }
+        public void Task66()
+        {
+            int M = Universal.ReadInt("Введите число M: ");
+            int N = Universal.ReadInt("Введите число N: ");
+            if (M > N) Console.WriteLine($" Сумма натуральных элементов равна: {Universal.SumNumbers(N, M)}");
+            else Console.WriteLine($" Сумма натуральных элементов равна: {Universal.SumNumbers(M, N)}");
+
+        }
+        public void Task68()
+        {
+            ulong valueA = Universal.Readulong("Введите первое число : ");
+            ulong valueB = Universal.Readulong("Введите второе число : ");
+            if (valueA >= 0 && valueB >= 0)
+            {
+                if ((valueA == 0 && valueB <= ulong.MaxValue - 1)||
+                    (valueA == 1 && valueB <= 12021)||
+                    (valueA == 2 && valueB <= 6008)||
+                    (valueA == 3 && valueB <= 10))
+                {
+                    ulong result = Universal.Akkermana(valueA, valueB);
+                    Console.Write($"\r\nm = {valueA}, n = {valueB} -> {result}");
+                    
+                }else Console.WriteLine("Программа не в состоянии посчитать функцию для таких значений");
+
+            }
+            else  Console.WriteLine("Числа должны быть не отрицательные");
+        }
+
+      
         //функция вызова медота по имени 
         public void Call(string taskName)
         {
