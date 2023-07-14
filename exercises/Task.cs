@@ -11,7 +11,6 @@ namespace exercises
         public Task(int id, string name, string description, string fullDescription)
         {
             Id = id;
-           
             Name = name;
             Description = description;
             FullDescription = fullDescription;
